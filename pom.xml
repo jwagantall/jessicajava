@@ -41,7 +41,7 @@
         <hyp.nexus.snapshot-url>https://nexus.hyperledger.org/content/repositories/snapshots/</hyp.nexus.snapshot-url>
         <hyp.nexus.public-url>https://nexus.hyperledger.org/content/groups/public/</hyp.nexus.public-url>
         <hyp.nexus.staging.server-id>hyperledger-bin-publish</hyp.nexus.staging.server-id>
-        <hyp.nexus.staging.profile-id>176c31dfe190a</hyp.nexus.staging.profile-id>
+        <hyp.nexus.staging.profile-id>1e394b667b8d9</hyp.nexus.staging.profile-id>
         <hyp.git.host>gerrit.hyperledger.org</hyp.git.host>
         <hyp.git.port>443</hyp.git.port>
         <hyp.git.project>fabric-sdk-java</hyp.git.project>
