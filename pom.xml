@@ -4,7 +4,7 @@
     <groupId>org.hyperledger.fabric-sdk-java</groupId>
     <artifactId>fabric-sdk-java</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.1</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>fabric-java-sdk</name>
     <description>Java SDK for Hyperledger fabric project</description>
     <url>https://www.hyperledger.org/community/projects</url>
@@ -39,6 +39,7 @@
         <hyp.nexus.port>443</hyp.nexus.port>
         <hyp.nexus.release-url>https://nexus.hyperledger.org/content/repositories/releases/</hyp.nexus.release-url>
         <hyp.nexus.snapshot-url>https://nexus.hyperledger.org/content/repositories/snapshots/</hyp.nexus.snapshot-url>
+	<hyp.nexus.staging-url>https://nexus.hyperledger.org/content/repositories/staging/</hyp.nexus.staging-url>
         <hyp.nexus.public-url>https://nexus.hyperledger.org/content/groups/public/</hyp.nexus.public-url>
         <hyp.nexus.staging.server-id>hyperledger-staging</hyp.nexus.staging.server-id>
         <hyp.nexus.staging.profile-id>1e394b667b8d9</hyp.nexus.staging.profile-id>
@@ -343,23 +344,34 @@
         <repository>
             <id>hyperledger-releases</id>
             <name>hyperledger-repository-releases</name>
-            <url>${hyp.nexus.release-url}</url>
+            <url>${hyp.nexus.release-url}/</url>
         </repository>
         <snapshotRepository>
             <id>hyperledger-snapshots</id>
             <name>hyperledger-repository-snapshots</name>
-            <url>${hyp.nexus.snapshot-url}</url>
+            <url>${hyp.nexus.snapshot-url}/</url>
 	</snapshotRepository>
     </distributionManagement>
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Official Maven repository</name>
+            <url>http://repo2.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>hyperledger-releases</id>
+            <name>hyperledger-repository-releases</name>
+            <url>${hyp.nexus.release-url}/</url>
+        </repository>
+        <repository>
+            <id>hyperledger-staging</id>
+            <name>hyperledger-repository-staging</name>
+            <url>${hyp.nexus.staging-url}</url>
+         </repository>
+         </repositories>
     <profiles>
         <profile>
-            <id>blackduck</id>
-            <activation>
-                <property>
-                    <name>blackduck-scan</name>
-                </property>
-            </activation>
-            <build>
+             <build>
                 <plugins>
                     <plugin>
                          <groupId>com.blackducksoftware.integration</groupId>
@@ -383,5 +395,82 @@
                 </plugins>
             </build>
         </profile>
-     </profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>hyperledger-staging</serverId>
+                            <stagingProfileId>${hyp.nexus.staging.profile-id}</stagingProfileId>
+                            <nexusUrl>https://${hyp.nexus.host}/</nexusUrl>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>2.3</version>
+                        <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <configuration>
+                            <useAgent>true</useAgent>
+                        </configuration>
+                        <version>1.5</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>2.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.10.4</version>
+                        <configuration>
+                            <excludePackageNames>
+                                org.hyperledger.fabric_ca.sdk.helper:org.hyperledger.fabric.protos.*:org.hyperledger.fabric.sdk.helper:org.hyperledger.fabric.sdk.transaction:org.hyperledger.fabric.sdk.security
+                            </excludePackageNames>
+                            <show>public</show>
+                            <doctitle>Hyperledger Fabric Java SDK</doctitle>
+                            <nohelp>true</nohelp>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
