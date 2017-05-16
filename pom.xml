@@ -328,6 +328,13 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+        <repository>
+            <id>hyperledger-staging</id>
+            <name>Hyperledger Staging Repository</name>
+            <url>${nexusproxy}/${staging.path}</url>
+        </repository>
+    </repositories>
     <distributionManagement>
         <site>
             <id>hyperledger-site</id>
@@ -343,11 +350,6 @@
             <name>hyperledger-repository-snapshots</name>
             <url>${hyp.nexus.snapshot-url}</url>
 	</snapshotRepository>
-        <repository>
-            <id>hyperledger-staging</id>
-            <name>Hyperledger Staging Repository</name>
-            <url>${nexusproxy}/${staging.path}</url>
-        </repository>
     </distributionManagement>
     <profiles>
         <profile>
