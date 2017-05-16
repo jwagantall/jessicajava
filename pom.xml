@@ -39,6 +39,7 @@
         <hyp.nexus.port>443</hyp.nexus.port>
         <hyp.nexus.release-url>https://nexus.hyperledger.org/content/repositories/releases/</hyp.nexus.release-url>
         <hyp.nexus.snapshot-url>https://nexus.hyperledger.org/content/repositories/snapshots/</hyp.nexus.snapshot-url>
+	<hyp.nexus.staging-url>https://nexus.hyperledger.org/content/repositories/staging/</hyp.nexus.staging-url>
         <hyp.nexus.public-url>https://nexus.hyperledger.org/content/groups/public/</hyp.nexus.public-url>
         <hyp.nexus.staging.server-id>hyperledger-bin-publish</hyp.nexus.staging.server-id>
         <hyp.nexus.staging.profile-id>1e394b667b8d9</hyp.nexus.staging.profile-id>
@@ -320,23 +321,34 @@
         <repository>
             <id>hyperledger-releases</id>
             <name>hyperledger-repository-releases</name>
-            <url>${hyp.nexus.release-url}</url>
+            <url>${hyp.nexus.release-url}/</url>
         </repository>
         <snapshotRepository>
             <id>hyperledger-snapshots</id>
             <name>hyperledger-repository-snapshots</name>
-            <url>${hyp.nexus.snapshot-url}</url>
+            <url>${hyp.nexus.snapshot-url}/</url>
 	</snapshotRepository>
     </distributionManagement>
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Official Maven repository</name>
+            <url>http://repo2.maven.org/maven2/</url>
+        </repository>
+        <repository>
+            <id>hyperledger-releases</id>
+            <name>hyperledger-repository-releases</name>
+            <url>${hyp.nexus.release-url}/</url>
+        </repository>
+        <repository>
+            <id>hyperledger-staging</id>
+            <name>hyperledger-repository-staging</name>
+            <url>${hyp.nexus.staging-url}</url>
+         </repository>
+         </repositories>
     <profiles>
         <profile>
-            <id>blackduck</id>
-            <activation>
-                <property>
-                    <name>blackduck-scan</name>
-                </property>
-            </activation>
-            <build>
+             <build>
                 <plugins>
                     <plugin>
                          <groupId>com.blackducksoftware.integration</groupId>
@@ -370,10 +382,9 @@
                         <version>1.6.7</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <serverId>${hyp.nexus.staging.server-id}</serverId>
+                            <serverId>hyperledger-staging</serverId>
                             <stagingProfileId>${hyp.nexus.staging.profile-id}</stagingProfileId>
                             <nexusUrl>https://${hyp.nexus.host}/</nexusUrl>
-                            <autoReleaseAfterClose>false</autoReleaseAfterClose>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -400,15 +411,6 @@
                             <useAgent>true</useAgent>
                         </configuration>
                         <version>1.5</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
