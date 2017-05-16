@@ -40,14 +40,18 @@
         <hyp.nexus.release-url>https://nexus.hyperledger.org/content/repositories/releases/</hyp.nexus.release-url>
         <hyp.nexus.snapshot-url>https://nexus.hyperledger.org/content/repositories/snapshots/</hyp.nexus.snapshot-url>
         <hyp.nexus.public-url>https://nexus.hyperledger.org/content/groups/public/</hyp.nexus.public-url>
-        <hyp.nexus.staging.server-id>hyperledger-bin-publish</hyp.nexus.staging.server-id>
+        <hyp.nexus.staging.server-id>hyperledger-staging</hyp.nexus.staging.server-id>
         <hyp.nexus.staging.profile-id>1e394b667b8d9</hyp.nexus.staging.profile-id>
         <hyp.git.host>gerrit.hyperledger.org</hyp.git.host>
         <hyp.git.port>443</hyp.git.port>
         <hyp.git.project>fabric-sdk-java</hyp.git.project>
         <hyp.git.protocol>https</hyp.git.protocol>
+        <nexusproxy>https://nexus.hyperledger.org</nexusproxy>
+        <sitePath>/content/sites/site/${project.groupId}/${project.artifactId}/${project.version}</sitePath>
+        <releases.path>content/repositories/releases/</releases.path>
+        <snapshots.path>content/repositories/snapshots/</snapshots.path>
+        <staging.path>content/repositories/staging/</staging.path>
     </properties>
-
     <reporting>
         <plugins>
             <plugin>
@@ -312,6 +316,24 @@
             </plugin>
         </plugins>
     </build>
+    <repositories>
+            <repository>
+                    <id>hyperledger-snapshots</id>
+                    <name>Hyperledger Snapshot Repository</name>
+                    <url>${nexusproxy}/${snapshots.path}</url>
+            </repository>
+            <repository>
+                    <id>hyperledger-releases</id>
+                    <name>Hyperledger Release Repository</name>
+                    <url>${nexusproxy}/${releases.path}/</url>
+            </repository>
+            <repository>
+                    <id>hyperledger-staging</id>
+                    <name>Hyperledger Staging Repository</name>
+                    <url>${nexusproxy}/${staging.path}</url>
+            </repository>
+    </repositories>
+	
     <distributionManagement>
         <site>
             <id>hyperledger-site</id>
