@@ -12,7 +12,7 @@ export ORG_HYPERLEDGER_FABRIC_SDK_LOGLEVEL=TRACE
 export ORG_HYPERLEDGER_FABRIC_CA_SDK_LOGLEVEL=TRACE
 
 cd $WD/src/test/fixture/sdkintegration
-./fabric.sh restart >dockerlogfile.log 2>&1 &
+#./fabric.sh restart >dockerlogfile.log 2>&1 &
 cd $WD
 sleep 30
 docker ps -a
