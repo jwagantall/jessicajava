@@ -332,7 +332,7 @@
             <repository>
                     <id>hyperledger-snapshots</id>
                     <name>Hyperledger Snapshot Repository</name>
-                    <url>${nexusproxy}/${snapshots.path}</url>
+                    <url>${nexusproxy}/${staging.path}</url>
             </repository>
             <repository>
                     <id>hyperledger-releases</id>
@@ -359,7 +359,7 @@
         <snapshotRepository>
             <id>hyperledger-snapshots</id>
             <name>hyperledger-repository-snapshots</name>
-            <url>${hyp.nexus.snapshot-url}</url>
+            <url>${nexusproxy}/${staging.path}</url>
 	</snapshotRepository>
     </distributionManagement>
     <profiles>
