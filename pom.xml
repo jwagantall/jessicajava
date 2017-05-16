@@ -221,7 +221,7 @@
                 <configuration>
                     <serverId>${hyp.nexus.staging.server-id}</serverId>
                     <stagingProfileId>${hyp.nexus.staging.profile-id}</stagingProfileId>
-                    <nexusUrl>https://${hyp.nexus.host}/</nexusUrl>
+                    <nexusUrl>http://10.30.65.251:8081/</nexusUrl>
                     <autoReleaseAfterClose>false</autoReleaseAfterClose>
                 </configuration>
             </plugin>
