@@ -332,7 +332,7 @@
         <repository>
             <id>hyperledger-staging</id>
             <name>Hyperledger Staging Repository</name>
-            <url>${nexusproxy}/${staging.path}</url>
+            <url>http://10.30.65.251:8081/${staging.path}</url>
         </repository>
     </repositories>
     <distributionManagement>
